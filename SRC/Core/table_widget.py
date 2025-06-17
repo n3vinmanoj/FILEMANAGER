@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
 from .dnd import DragDropMixin
 from .Dialogs.dialogs import PropertiesDialog
 from Utils.formatters import format_size
+from Utils.icons import get_icon
 
 class FileListWidget(DragDropMixin, QTableWidget):
     """Custom table widget for file listing with drag-and-drop support"""
@@ -21,7 +22,7 @@ class FileListWidget(DragDropMixin, QTableWidget):
     
     def setup_table(self):
         self.setColumnCount(4)
-        self.setHorizontalHeaderLabels(["Name", "Type", "Size", "Modified"])
+        self.setHorizontalHeaderLabels(["", "Name", "Type", "Size", "Modified"])
         self.verticalHeader().setVisible(False)
         
         header = self.horizontalHeader()
@@ -43,7 +44,10 @@ class FileListWidget(DragDropMixin, QTableWidget):
         self.setRowCount(len(files))
         
         for row, file_info in enumerate(files):
+            icon_item = QTableWidgetItem()
+            icon = get_icon(file_info)
             name_item = QTableWidgetItem(file_info['name'])
+            name_item.setIcon(icon)
             name_item.setData(Qt.ItemDataRole.UserRole, file_info)
             self.setItem(row, 0, name_item)
             

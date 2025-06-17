@@ -1,24 +1,31 @@
 """
-Modern styling for PyQt6 File Manager application
+Modern styling for PyQt6 File Manager application - Neutral Clean Design
 """
 
 
 COLORS = {
-    'primary': '#2563eb',        
-    'primary_hover': '#1d4ed8',  
-    'secondary': '#64748b',      
-    'background': '#0f172a',     
-    'surface': '#1e293b',       
-    'surface_hover': '#334155',  
-    'text': '#f8fafc',          
-    'text_secondary': '#cbd5e1', 
-    'success': '#10b981',       
-    'warning': '#f59e0b',       
-    'error': '#ef4444',          
-    'border': '#475569',
-    'drag_over':'#1e40af40',
-    'selection': '#3b82f640',
-    'keyboard_focus': '#60a5fa40',    
+    'primary': '#6b7280',        # Neutral gray - subdued but visible
+    'primary_hover': '#9ca3af',  # Lighter gray on hover
+    'primary_light': '#d1d5db',  # Light gray
+    'primary_dark': '#4b5563',   # Darker gray
+    'secondary': '#6b7280',      # Medium gray
+    'background': '#1a1a1a',     # Dark background like Linux
+    'surface': '#2a2a2a',        # Dark surface
+    'surface_hover': '#3a3a3a',  # Hover state
+    'surface_light': '#242424',  # Slightly lighter surface
+    'text': '#e5e5e5',           # Light text on dark
+    'text_secondary': '#b5b5b5', # Medium gray text
+    'text_muted': '#888888',     # Muted gray text
+    'success': '#6b7280',        # Neutral gray
+    'warning': '#6b7280',        # Neutral gray
+    'error': '#6b7280',          # Neutral gray
+    'border': '#404040',         # Dark border
+    'border_light': '#353535',   # Lighter dark border
+    'border_subtle': '#4a4a4a',  # Subtle border
+    'drag_over':'#6b728020',     # Subtle overlay
+    'selection': '#6b728025',    # Subtle selection
+    'keyboard_focus': '#6b728015', # Barely visible focus
+    'divider': '#404040',        # Dark divider
 }
 
 
@@ -26,13 +33,14 @@ MAIN_STYLE = f"""
 QMainWindow {{
     background-color: {COLORS['background']};
     color: {COLORS['text']};
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
     font-size: 14px;
+    font-weight: 400;
 }}
 
-/* Toolbar Styling */
+/* Toolbar Styling - Ultra minimal */
 QToolBar {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     border: none;
     border-bottom: 1px solid {COLORS['border']};
     padding: 8px;
@@ -40,7 +48,7 @@ QToolBar {{
 }}
 
 * {{
-    outline: none  !important;
+    outline: none !important;
     border: none !important;
 }}
 
@@ -50,7 +58,7 @@ QToolBar {{
 
 QpushButton:focus, QLineEdit:focus {{
     outline: none !important;
-    border : none !important;
+    border: none !important;
 }}
 
 QTableWidget::item:focus {{
@@ -61,8 +69,8 @@ QTableWidget::item:focus {{
 QToolBar QAction {{
     padding: 8px 16px;
     margin: 0 4px;
-    border-radius: 6px;
-    background-color: transparent;
+    border-radius: 8px;
+    background: transparent;
     color: {COLORS['text']};
 }}
 
@@ -70,15 +78,16 @@ QToolBar QAction:hover {{
     background-color: {COLORS['surface_hover']};
 }}
 
-/* Button Styling */
+/* Button Styling - Soft rounded */
 QPushButton {{
     background-color: {COLORS['primary']};
     color: white;
     border: none;
     padding: 10px 16px;
-    border-radius: 6px;
+    border-radius: 12px;
     font-weight: 500;
     min-width: 80px;
+    font-size: 13px;
 }}
 
 QPushButton:hover {{
@@ -86,7 +95,7 @@ QPushButton:hover {{
 }}
 
 QPushButton:pressed {{
-    background-color: #1e40af;
+    background-color: {COLORS['primary_dark']};
 }}
 
 QPushButton:disabled {{
@@ -94,82 +103,103 @@ QPushButton:disabled {{
     color: {COLORS['text_secondary']};
 }}
 
-/* Navigation buttons */
+/* Navigation buttons - Soft and neutral */
 QPushButton#backButton, QPushButton#homeButton {{
     min-width: 40px;
     padding: 8px;
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 16px;
+    background-color: {COLORS['surface']};
+    color: {COLORS['text_secondary']};
+    border: 1px solid {COLORS['border']};
 }}
 
-/* Input Fields */
+QPushButton#backButton:hover, QPushButton#homeButton:hover {{
+    background-color: {COLORS['surface_hover']};
+    color: {COLORS['text']};
+    border-color: {COLORS['border_subtle']};
+}}
+
+/* Input Fields - Soft with gentle borders */
 QLineEdit {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     border: 1px solid {COLORS['border']};
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 10px 12px;
     color: {COLORS['text']};
     font-size: 14px;
+    font-weight: 400;
 }}
 
 QLineEdit:focus {{
-    border-color: {COLORS['primary']};
+    border-color: {COLORS['border_subtle']};
+    background-color: {COLORS['surface']};
     outline: none !important;
 }}
 
 QLineEdit::placeholder {{
-    color: {COLORS['text_secondary']};
+    color: {COLORS['text_muted']};
+    font-style: normal;
 }}
 
-/* Table Widget */
+/* Table Widget - Less blocky, more flowing */
 QTableWidget {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     border: 1px solid {COLORS['border']};
-    border-radius: 8px;
-    gridline-color: {COLORS['border']};
-    selection-background-color: {COLORS['primary']};
-    alternate-background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    gridline-color: transparent;
+    selection-background-color: {COLORS['selection']};
+    alternate-background-color: {COLORS['surface']};
+    show-decoration-selected: 0;
 }}
 
 QTableWidget::item {{
-    padding: 12px 8px;
+    padding: 16px 12px;
     color: {COLORS['text']};
     border: none;
     outline: none;
+    font-weight: 400;
+    border-bottom: 1px solid {COLORS['border_light']};
 }}
 
 QTableWidget::item:focus {{
     outline: none !important;
     border: none !important;
-    background-color: {COLORS['primary']};
-    color: white;
+    background-color: {COLORS['selection']};
+    color: {COLORS['text']};
+    border-bottom: 1px solid {COLORS['border_light']};
 }}
 
 QTableWidget::item:selected {{
-    background-color: {COLORS['primary']};
-    color: white;
+    background-color: {COLORS['selection']};
+    color: {COLORS['text']};
     outline: none;
+    border-bottom: 1px solid {COLORS['border_light']};
 }}
 
 QTableWidget::item:hover {{
     background-color: {COLORS['surface_hover']};
+    border-bottom: 1px solid {COLORS['border_light']};
 }}
 
 QTableWidget::item:selected:focus {{
     outline: none !important;
     border: none !important;
-    background-color: {COLORS['primary']};
-    color: white;
+    background-color: {COLORS['selection']};
+    color: {COLORS['text']};
+    border-bottom: 1px solid {COLORS['border_light']};
 }}
 
-/* Header */
+/* Header - Soft and minimal */
 QHeaderView::section {{
-    background-color: {COLORS['background']};
-    color: {COLORS['text']};
-    padding: 12px 8px;
+    background-color: {COLORS['surface']};
+    color: {COLORS['text_secondary']};
+    padding: 16px 12px;
     border: none;
-    border-bottom: 2px solid {COLORS['border']};
-    font-weight: 600;
+    border-bottom: 1px solid {COLORS['border']};
+    border-right: 1px solid {COLORS['border_light']};
+    font-weight: 500;
+    font-size: 13px;
 }}
 
 QHeaderView::section:hover {{
@@ -180,22 +210,26 @@ QHeaderView::section:focus {{
     outline: none !important;
 }}
 
-/* Scrollbars */
+QHeaderView::section:last {{
+    border-right: none;
+}}
+
+/* Scrollbars - Nearly invisible */
 QScrollBar:vertical {{
-    background-color: {COLORS['surface']};
-    width: 12px;
-    border-radius: 6px;
+    background-color: transparent;
+    width: 8px;
+    border-radius: 4px;
     margin: 0;
 }}
 
 QScrollBar::handle:vertical {{
-    background-color: {COLORS['secondary']};
-    border-radius: 6px;
+    background-color: {COLORS['border_subtle']};
+    border-radius: 4px;
     min-height: 30px;
 }}
 
 QScrollBar::handle:vertical:hover {{
-    background-color: {COLORS['text_secondary']};
+    background-color: {COLORS['secondary']};
 }}
 
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
@@ -203,58 +237,61 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
     background: none;
 }}
 
-/* Status Bar */
+/* Status Bar - Ultra minimal */
 QStatusBar {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     border-top: 1px solid {COLORS['border']};
     color: {COLORS['text_secondary']};
     padding: 4px 8px;
+    font-size: 12px;
 }}
 
-/* Progress Bar */
+/* Progress Bar - Soft and neutral */
 QProgressBar {{
     background-color: {COLORS['surface']};
     border: 1px solid {COLORS['border']};
-    border-radius: 4px;
+    border-radius: 8px;
     text-align: center;
     color: {COLORS['text']};
     height: 20px;
+    font-weight: 500;
 }}
 
 QProgressBar::chunk {{
     background-color: {COLORS['primary']};
-    border-radius: 3px;
+    border-radius: 7px;
 }}
 
-/* Menu Styling */
+/* Menu Styling - Soft and flowing */
 QMenu {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     border: 1px solid {COLORS['border']};
-    border-radius: 8px;
-    padding: 4px;
+    border-radius: 12px;
+    padding: 8px;
     color: {COLORS['text']};
 }}
 
 QMenu::item {{
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 12px 16px;
+    border-radius: 8px;
     margin: 2px;
+    font-weight: 400;
 }}
 
 QMenu::item:selected {{
-    background-color: {COLORS['primary']};
-    color: white;
+    background-color: {COLORS['surface_hover']};
+    color: {COLORS['text']};
 }}
 
 QMenu::separator {{
     height: 1px;
     background-color: {COLORS['border']};
-    margin: 4px 0;
+    margin: 8px 0;
 }}
 """
 
 SIDEBAR_STYLE = f"""
-/* Sidebar styling */
+/* Sidebar styling - Soft and minimal */
 QFrame#sidebarFrame {{
     background-color: {COLORS['surface']};
     border-right: 1px solid {COLORS['border']};
@@ -262,21 +299,21 @@ QFrame#sidebarFrame {{
     max-width: 170px;
 }}
 
-/* Section headers - much more compact */
+/* Section headers - Soft typography */
 QFrame#sidebarFrame QLabel {{
-    color: {COLORS['text_secondary']};
+    color: {COLORS['text_muted']};
     font-weight: 600;
     font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 8px 8px 2px 8px !important;
+    padding: 12px 12px 4px 12px !important;
     margin: 0;
     background-color: transparent;
     min-height: 12px;
     max-height: 12px;
 }}
 
-/* List widgets - very compact */
+/* List widgets - Soft and flowing */
 QFrame#sidebarFrame QListWidget {{
     background-color: transparent;
     border: none;
@@ -285,39 +322,40 @@ QFrame#sidebarFrame QListWidget {{
     font-size: 11px;
     font-weight: 500;
     padding: 0;
-    margin: 0 4px 8px 4px;
-    spacing: 0;
+    margin: 0 8px 12px 8px;
+    spacing: 2px;
 }}
 
-/* List items - minimal padding for compactness */
+/* List items - Soft rounded */
 QFrame#sidebarFrame QListWidget::item {{
-    padding: 6px 8px;
-    border-radius: 4px;
-    margin: 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 1px 0;
     min-height: 12px;
     max-height: 24px;
     color: {COLORS['text']};
     background-color: transparent;
     border: none;
+    font-weight: 400;
 }}
 
-/* Hover state */
+/* Hover state - Very subtle */
 QFrame#sidebarFrame QListWidget::item:hover {{
     background-color: {COLORS['surface_hover']};
     color: {COLORS['text']};
 }}
 
-/* Selected state */
+/* Selected state - Soft */
 QFrame#sidebarFrame QListWidget::item:selected {{
-    background-color: {COLORS['primary']};
-    color: white;
-    font-weight: 600;
+    background-color: {COLORS['selection']};
+    color: {COLORS['text']};
+    font-weight: 500;
 }}
 
 /* Selected and not active */
 QFrame#sidebarFrame QListWidget::item:selected:!active {{
-    background-color: {COLORS['primary']};
-    color: white;
+    background-color: {COLORS['selection']};
+    color: {COLORS['text']};
     opacity: 0.8;
 }}
 
@@ -356,10 +394,10 @@ QFrame#sidebarFrame QListWidget::item:focus {{
     border: none;
 }}
 
-/* Device list special styling - even more compact */
+/* Device list special styling - Ultra subtle */
 QFrame#sidebarFrame QListWidget#devicesList::item {{
     font-size: 10px;
-    color: {COLORS['text_secondary']};
+    color: {COLORS['text_muted']};
     max-height: 20px;
 }}
 
@@ -368,13 +406,13 @@ QFrame#sidebarFrame QListWidget#devicesList::item:hover {{
 }}
 
 QFrame#sidebarFrame QListWidget#devicesList::item:selected {{
-    color: white;
+    color: {COLORS['text']};
 }}
 
 /* Force specific heights for lists to prevent scrolling */
 QFrame#sidebarFrame QListWidget#placesList {{
-    max-height: 230px;
-    min-height: 230px;
+    max-height: 270px;
+    min-height: 270px;
 }}
 
 QFrame#sidebarFrame QListWidget#devicesList {{
@@ -382,32 +420,33 @@ QFrame#sidebarFrame QListWidget#devicesList {{
     min-height: 200px;
 }}
 """
-DRAG_DROP_STYLE= f"""
-/* Drag and Drop styling */
+
+DRAG_DROP_STYLE = f"""
+/* Drag and Drop styling - Very subtle */
 QTableWidget[dragOver="true"] {{
     background-color: {COLORS['drag_over']};
-    border: 2px dashed {COLORS['primary']};
+    border: 2px dashed {COLORS['border_subtle']};
 }}
 
 QTableWidget::item:drag {{
     background-color: {COLORS['surface']};
-    border: 1px solid {COLORS['primary']};
-    border-radius: 4px;
+    border: 1px solid {COLORS['border_subtle']};
+    border-radius: 8px;
     opacity: 0.8;
 }}
 
 QTableWidget::item:selected {{
     background-color: {COLORS['selection']};
-    border: 1px solid {COLORS['primary']};
+    border: none;
 }}
 
-/* Keyboard focus indicators */
+/* Keyboard focus indicators - Barely visible */
 QTableWidget::item:focus {{
     background-color: {COLORS['keyboard_focus']};
-    border: 1px solid {COLORS['primary']};
+    border: none;
 }}
 
-/* Selection styling */
+/* Selection styling - Ultra soft */
 QTableWidget::item:selected:active {{
     background-color: {COLORS['selection']};
     color: {COLORS['text']};
@@ -419,19 +458,19 @@ QTableWidget::item:selected:!active {{
 }}
 """
 
-
-# Dialog styling
+# Dialog styling - Soft and neutral
 DIALOG_STYLE = f"""
 QDialog {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     color: {COLORS['text']};
     border: 1px solid {COLORS['border']};
-    border-radius: 8px;
+    border-radius: 16px;
 }}
 
 QDialogButtonBox QPushButton {{
     min-width: 100px;
     padding: 8px 16px;
+    border-radius: 10px;
 }}
 
 QLabel {{
@@ -444,20 +483,22 @@ QFormLayout QLabel {{
 }}
 """
 
-
 MESSAGE_BOX_STYLE = f"""
 QMessageBox {{
-    background-color: {COLORS['surface']};
+    background-color: {COLORS['surface_light']};
     color: {COLORS['text']};
+    border-radius: 12px;
 }}
 
 QMessageBox QPushButton {{
     min-width: 80px;
     padding: 6px 12px;
+    border-radius: 8px;
 }}
 
 QMessageBox QLabel {{
     color: {COLORS['text']};
+    font-weight: 400;
 }}
 """
 
