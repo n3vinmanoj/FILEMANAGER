@@ -95,6 +95,13 @@ class Ui_MainWindow(object):
         self.refresh_button.setObjectName(u"refresh_button")
         self.refresh_button.setIconSize(QSize(16, 16))
 
+        self.hidden_toggle = QToolButton(self.centralwidget)
+        self.hidden_toggle.setObjectName(u"hidden_toggle")
+        self.hidden_toggle.setCheckable(True)
+        self.hidden_toggle.setToolTip("Show Hidden Files")
+        self.hidden_toggle.setText("👁️")
+        self.toolbarLayout.addWidget(self.hidden_toggle)
+
         self.toolbarLayout.addWidget(self.refresh_button)
 
 

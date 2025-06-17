@@ -70,7 +70,7 @@ class FileService:
             
             for item in path_obj.iterdir():
                 try:
-                    if term.lower() in item.name.lower():
+                    if item.name.lower().startswith(term.lower()):
                         stat = item.stat()
                         results.append({
                             'name': item.name,

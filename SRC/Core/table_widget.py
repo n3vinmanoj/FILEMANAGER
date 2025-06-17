@@ -22,7 +22,7 @@ class FileListWidget(DragDropMixin, QTableWidget):
     
     def setup_table(self):
         self.setColumnCount(4)
-        self.setHorizontalHeaderLabels(["", "Name", "Type", "Size", "Modified"])
+        self.setHorizontalHeaderLabels(["Name", "Type", "Size", "Modified"])
         self.verticalHeader().setVisible(False)
         
         header = self.horizontalHeader()
@@ -31,6 +31,9 @@ class FileListWidget(DragDropMixin, QTableWidget):
         header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
         
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+
+
         self.setSortingEnabled(True)
         self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
         self.setAlternatingRowColors(True)
@@ -44,7 +47,6 @@ class FileListWidget(DragDropMixin, QTableWidget):
         self.setRowCount(len(files))
         
         for row, file_info in enumerate(files):
-            icon_item = QTableWidgetItem()
             icon = get_icon(file_info)
             name_item = QTableWidgetItem(file_info['name'])
             name_item.setIcon(icon)
@@ -83,6 +85,35 @@ class FileListWidget(DragDropMixin, QTableWidget):
             else:
                 self.parent_window.open_file(file_info['path'])
     
+    def keyPressEvent(self, event):
+        """Add keyboard navigation by first letter"""
+        if event.text().isalpha() and len(event.text()) == 1:
+            letter = event.text().lower()
+            current_row = self.currentRow()
+            found_row = -1
+        
+        
+            for row in range(current_row + 1, self.rowCount()):
+                item = self.item(row, 0)
+                if item and item.text().lower().startswith(letter):
+                    found_row = row
+                    break
+        
+        
+            if found_row < 0:
+                for row in range(0, current_row + 1):
+                    item = self.item(row, 0)
+                    if item and item.text().lower().startswith(letter):
+                        found_row = row
+                        break
+        
+            if found_row >= 0:
+                self.setCurrentCell(found_row, 0)  
+                self.scrollTo(self.model().index(found_row, 0))
+                event.accept()  
+                return
+    
+        super().keyPressEvent(event)
     def get_selected_files(self):
         
         """Get selected files from the table with full row selection"""

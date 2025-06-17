@@ -8,15 +8,18 @@ from file_service import file_service
 class FileManagerAPI:
     """Handles file operations directly without Node.js backend"""
     
-    def __init__(self, base_url=None):
+    def __init__(self, base_url=None,parent_window=None):
         # base_url parameter kept for compatibility but not used
         # All operations are now local
-        self.base_url = base_url  # Add this line to fix the error
+        self.base_url = base_url
+        self.parent_window = parent_window  
         pass
     
     def read_directory(self, path):
         """Read directory contents"""
         try:
+
+            
             # Handle Windows-specific path formatting
             if sys.platform == 'win32':
                 if len(path) == 2 and path[1] == ':':
@@ -58,7 +61,9 @@ class FileManagerAPI:
                     # Fallback if stat fails
                     item['created'] = item.get('modified', 0)
                     item['accessed'] = item.get('modified', 0)
-            
+            if not self.parent_window.show_hidden:  # Access parent window's state
+                data = [item for item in data if not item['name'].startswith('.')]
+      
             return data
             
         except Exception as e:

@@ -4,7 +4,7 @@ from datetime import datetime
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import (
     QMainWindow, QMessageBox, QToolBar, QStatusBar, 
-    QProgressBar, QDialog, QApplication,QListWidgetItem
+    QProgressBar, QDialog, QApplication,QListWidgetItem,QToolButton
 )
 from Services.api import FileManagerAPI
 from .worker import WorkerThread
@@ -20,6 +20,8 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
     """Main file manager window with all business logic"""
     def __init__(self):
         try:
+
+            
             print("Initializing FileManagerWindow...")
             super().__init__()
             print("✓ Super initialization complete")
@@ -29,7 +31,7 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
 
             self.setMinimumSize(900, 700)
             
-            self.api = FileManagerAPI()
+            self.api = FileManagerAPI(parent_window=self) 
             print("✓ API initialized")
             
             self.current_path = ""
@@ -55,6 +57,7 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
             self.load_home_directory()
             print("✓ Home directory load initiated")
             
+            self.show_hidden=False
             print("FileManagerWindow initialization complete!")
             
         except Exception as e:
@@ -92,6 +95,9 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
         self.upButton.clicked.connect(self.go_up)
         self.forwardButton.clicked.connect(self.go_forward)
 
+        self.hidden_toggle = self.findChild(QToolButton, "hidden_toggle")
+        self.hidden_toggle.toggled.connect(self.toggle_hidden_files)
+
         self.currentPathLabel.setText("Path: ")
         self.itemCountLabel.setText("Items: 0")
 
@@ -103,8 +109,12 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
         self.progress_bar = QProgressBar()
         self.progress_bar.setVisible(False)
         self.statusBar.addPermanentWidget(self.progress_bar)
-    
 
+        self.file_list.setFocus()
+    
+    def toggle_hidden_files(self, checked):
+        self.show_hidden = checked
+        self.refresh()
     def populate_sidebar(self):
         home_path = os.path.expanduser("~")
         home_path = os.path.expanduser("~")
@@ -273,6 +283,7 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
         self.current_path = path
         self.address_input.setText(path)
         self.file_list.populate_files(files)
+        self.file_list.setFocus() 
         self.itemCountLabel.setText(f"Items: {len(files)}")
         self.backButton.setEnabled(bool(path and path != "/"))
         self.show_success(f"Loaded {len(files)} items")
@@ -294,6 +305,7 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
     def refresh(self):
         if self.current_path:
             self.navigate_to_path(self.current_path)
+            self.file_list.setFocus()
     
     def search_files(self):
         search_term = self.search_input.text().strip()
@@ -307,6 +319,7 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
     def on_search_results(self, files, search_term):
         self.set_loading(False)
         self.file_list.populate_files(files)
+        self.file_list.setFocus()
         self.show_success(f"Found {len(files)} items matching '{search_term}'")
     
     def clear_search(self):
