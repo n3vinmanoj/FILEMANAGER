@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from PySide6.QtCore import Qt, QPoint
+from PySide6.QtCore import Qt, QPoint,QSize
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QTableWidget, QTableWidgetItem, QHeaderView, 
@@ -33,6 +33,8 @@ class FileListWidget(DragDropMixin, QTableWidget):
         
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
+        self.setIconSize(QSize(16, 16))
+
 
         self.setSortingEnabled(True)
         self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
@@ -47,9 +49,7 @@ class FileListWidget(DragDropMixin, QTableWidget):
         self.setRowCount(len(files))
         
         for row, file_info in enumerate(files):
-            icon = get_icon(file_info)
-            name_item = QTableWidgetItem(file_info['name'])
-            name_item.setIcon(icon)
+            name_item = QTableWidgetItem(get_icon(file_info), file_info['name'])
             name_item.setData(Qt.ItemDataRole.UserRole, file_info)
             self.setItem(row, 0, name_item)
             

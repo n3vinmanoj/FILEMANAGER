@@ -14,12 +14,12 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+    QPalette, QPixmap, QRadialGradient, QTransform,QAction)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QHBoxLayout,
     QHeaderView, QLabel, QLineEdit, QListWidget,
     QListWidgetItem, QMainWindow, QSizePolicy, QSpacerItem,
     QStatusBar, QTableWidget, QTableWidgetItem, QToolButton,
-    QVBoxLayout, QWidget)
+    QVBoxLayout, QWidget,QMenu)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -94,6 +94,57 @@ class Ui_MainWindow(object):
         self.refresh_button = QToolButton(self.centralwidget)
         self.refresh_button.setObjectName(u"refresh_button")
         self.refresh_button.setIconSize(QSize(16, 16))
+
+        self.view_button = QToolButton(self.centralwidget)
+        self.view_button.setObjectName(u"view_button")
+        self.view_button.setPopupMode(QToolButton.InstantPopup)
+        self.view_button.setToolButtonStyle(Qt.ToolButtonIconOnly)
+        self.view_button.setIconSize(QSize(16, 16))
+        self.view_button.setFixedSize(24, 24)
+
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(Qt.transparent)
+        painter = QPainter(pixmap)
+        painter.setPen(QColor("#505050"))
+# Draw 2x2 grid
+        painter.drawLine(5, 3, 5, 13)
+        painter.drawLine(10, 3, 10, 13)
+        painter.drawLine(3, 5, 13, 5)
+        painter.drawLine(3, 10, 13, 10)
+        painter.end()
+        self.view_button.setIcon(QIcon(pixmap))
+
+        self.toolbarLayout.addWidget(self.view_button)
+
+# View menu
+        self.view_menu = QMenu(self.view_button)
+        self.view_menu.setObjectName(u"view_menu")
+        self.view_button.setMenu(self.view_menu)
+
+# View actions
+        self.actionList_View = QAction(MainWindow)
+        self.actionList_View.setObjectName(u"actionList_View")
+        self.actionList_View.setCheckable(True)
+        self.actionList_View.setChecked(True)
+        self.view_menu.addAction(self.actionList_View)
+
+        self.actionIcon_View = QAction(MainWindow)
+        self.actionIcon_View.setObjectName(u"actionIcon_View")
+        self.actionIcon_View.setCheckable(True)
+        self.view_menu.addAction(self.actionIcon_View)
+
+        self.view_menu.addSeparator()
+
+        self.actionSmall_Icons = QAction(MainWindow)
+        self.actionSmall_Icons.setObjectName(u"actionSmall_Icons")
+        self.actionSmall_Icons.setCheckable(True)
+        self.view_menu.addAction(self.actionSmall_Icons)
+
+        self.actionMedium_Icons = QAction(MainWindow)
+        self.actionMedium_Icons.setObjectName(u"actionMedium_Icons")
+        self.actionMedium_Icons.setCheckable(True)
+        self.actionMedium_Icons.setChecked(True)
+        self.view_menu.addAction(self.actionMedium_Icons)
 
         self.hidden_toggle = QToolButton(self.centralwidget)
         self.hidden_toggle.setObjectName(u"hidden_toggle")
@@ -221,10 +272,20 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
 
+        self.selectedCountLabel = QLabel(self.pathFrame)
+        self.selectedCountLabel.setObjectName(u"selectedCountLabel")
+        self.horizontalLayout_2.addWidget(self.selectedCountLabel)
+
+        self.horizontalLayout_2.addSpacing(10)
+
         self.itemCountLabel = QLabel(self.pathFrame)
         self.itemCountLabel.setObjectName(u"itemCountLabel")
 
         self.horizontalLayout_2.addWidget(self.itemCountLabel)
+
+        self.selectedCountLabel = QLabel(self.pathFrame)
+        self.selectedCountLabel.setObjectName(u"selectedCountLabel")
+        self.horizontalLayout_2.addWidget(self.selectedCountLabel)
 
 
         self.verticalLayout_3.addWidget(self.pathFrame)
@@ -340,8 +401,10 @@ class Ui_MainWindow(object):
         ___qlistwidgetitem9.setText(QCoreApplication.translate("MainWindow", u"💽 Removable Media", None));
         self.devicesList.setSortingEnabled(__sortingEnabled1)
 
-        self.currentPathLabel.setText(QCoreApplication.translate("MainWindow", u"Path: /home/user", None))
+        #self.currentPathLabel.setText(QCoreApplication.translate("MainWindow", u"Path: /home/user", None))
         self.itemCountLabel.setText(QCoreApplication.translate("MainWindow", u"Items: 42", None))
+        self.selectedCountLabel.setText(QCoreApplication.translate("MainWindow", u"Selected: 0", None))
+        
         ___qtablewidgetitem = self.file_list.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.file_list.horizontalHeaderItem(1)
@@ -354,4 +417,9 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"1", None));
         ___qtablewidgetitem5 = self.file_list.verticalHeaderItem(1)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"2", None));
+
+        self.actionList_View.setText(QCoreApplication.translate("MainWindow", u"List View", None))
+        self.actionIcon_View.setText(QCoreApplication.translate("MainWindow", u"Icon View", None))
+        self.actionSmall_Icons.setText(QCoreApplication.translate("MainWindow", u"Small Icons", None))
+        self.actionMedium_Icons.setText(QCoreApplication.translate("MainWindow", u"Medium Icons", None))
     # retranslateUi

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'recycle_bin_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -41,8 +41,8 @@ class Ui_RecycleBinDialog(object):
         __qtablewidgetitem4 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWidget.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWidget.horizontalHeader().setVisible(True)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(150)
 
@@ -50,21 +50,6 @@ class Ui_RecycleBinDialog(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.refreshButton = QPushButton(RecycleBinDialog)
-        self.refreshButton.setObjectName(u"refreshButton")
-
-        self.horizontalLayout.addWidget(self.refreshButton)
-
-        self.restoreButton = QPushButton(RecycleBinDialog)
-        self.restoreButton.setObjectName(u"restoreButton")
-
-        self.horizontalLayout.addWidget(self.restoreButton)
-
-        self.deleteButton = QPushButton(RecycleBinDialog)
-        self.deleteButton.setObjectName(u"deleteButton")
-
-        self.horizontalLayout.addWidget(self.deleteButton)
-
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
@@ -95,9 +80,6 @@ class Ui_RecycleBinDialog(object):
         ___qtablewidgetitem3.setText(QCoreApplication.translate("RecycleBinDialog", u"Type", None));
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("RecycleBinDialog", u"Size", None));
-        self.refreshButton.setText(QCoreApplication.translate("RecycleBinDialog", u"Refresh", None))
-        self.restoreButton.setText(QCoreApplication.translate("RecycleBinDialog", u"Restore Selected", None))
-        self.deleteButton.setText(QCoreApplication.translate("RecycleBinDialog", u"Delete Permanently", None))
         self.emptyButton.setText(QCoreApplication.translate("RecycleBinDialog", u"Empty Recycle Bin", None))
     # retranslateUi
 

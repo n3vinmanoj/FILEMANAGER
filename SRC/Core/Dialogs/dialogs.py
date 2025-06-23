@@ -51,7 +51,7 @@ class PropertiesDialog(QDialog, Ui_PropertiesDialog):
     def populate_data(self):
         
         self.name_label.setText(self.file_info['name'])
-        #self.icon_label.setPixmap(get_icon(self.file_info).pixmap(32, 32))
+        self.icon_label.setPixmap(get_icon(self.file_info).pixmap(48, 48))
         
         
         file_type = "Folder" if self.file_info['isDirectory'] else get_file_type(self.file_info)

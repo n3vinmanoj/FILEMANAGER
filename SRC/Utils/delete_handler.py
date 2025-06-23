@@ -50,7 +50,7 @@ class DeleteHandler:
             ) == QMessageBox.No:
                 return False
             
-            self.api.delete_item(path, False)
+            self.api.delete_item(path)
             return True
         except Exception as e:
             QMessageBox.critical(parent_widget, "Error", f"Delete failed: {str(e)}")

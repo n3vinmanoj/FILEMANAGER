@@ -5,6 +5,7 @@ import platform
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+from send2trash import send2trash
 
 class FileService:
     """
@@ -108,17 +109,16 @@ class FileService:
     
     def delete_item(self, item_path: str) -> None:
         """
-        Delete a file or directory
+        Move a file or directory to the system Trash/Recycle Bin
         """
         try:
             path_obj = Path(item_path)
-            if path_obj.is_dir():
-                shutil.rmtree(path_obj)
-            else:
-                path_obj.unlink()
+            if not path_obj.exists():
+                raise FileNotFoundError(f"Path not found: {item_path}")
+            send2trash(str(path_obj))  # Use send2trash for Trash handling
         except Exception as e:
             raise self._handle_error(e)
-    
+        
     def rename_item(self, old_path: str, new_name: str) -> str:
         """
         Rename a file or directory
@@ -185,6 +185,22 @@ class FileService:
             print(f"Error opening file: {e}")
             return False
     
+    def list_trash(self) -> list:
+        """
+        List files in the system Trash (Linux only).
+        """
+        trash_path = os.path.expanduser("~/.local/share/Trash/files")
+        files = []
+        if os.path.exists(trash_path):
+            for fname in os.listdir(trash_path):
+                fpath = os.path.join(trash_path, fname)
+                files.append({
+                    "name": fname,
+                    "path": fpath,
+                    "isDirectory": os.path.isdir(fpath)
+                })
+        return files
+
     def bulk_operation(self, operation: str, sources: List[str], destination: str) -> Dict[str, Any]:
         """
         Perform bulk operations on multiple files/directories

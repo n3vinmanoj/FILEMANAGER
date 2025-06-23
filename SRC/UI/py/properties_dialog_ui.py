@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QCheckBox, QDialog,
     QDialogButtonBox, QFrame, QGroupBox, QLabel,
     QSizePolicy, QTabWidget, QVBoxLayout, QWidget,QHBoxLayout,QFormLayout,QSpacerItem)
+from Utils.icons import get_icon
 
 class Ui_PropertiesDialog(object):
     def setupUi(self, PropertiesDialog):
@@ -139,6 +140,7 @@ class Ui_PropertiesDialog(object):
         self.button_box.setObjectName(u"button_box")
         self.button_box.setStandardButtons(QDialogButtonBox.Ok)
         self.verticalLayout.addWidget(self.button_box)
+        self.button_box.accepted.connect(PropertiesDialog.accept)
 
         self.retranslateUi(PropertiesDialog)
         self.tab_widget.setCurrentIndex(0)

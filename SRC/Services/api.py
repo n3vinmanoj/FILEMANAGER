@@ -157,6 +157,10 @@ class FileManagerAPI:
         except Exception as e:
             raise Exception(f"Failed to move items: {str(e)}")
     
+    def list_trash(self):
+        """List files in the system Trash."""
+        return file_service.list_trash()
+
     def clipboard_operation(self, operation, items, destination=None):
         """Handle clipboard operations"""
         try:
@@ -171,6 +175,8 @@ class FileManagerAPI:
             "status": "OK", 
             "timestamp": datetime.now().isoformat()
         }
+    
+
 
 # For backward compatibility, you can also create a function that returns the API instance
 def get_api_client():

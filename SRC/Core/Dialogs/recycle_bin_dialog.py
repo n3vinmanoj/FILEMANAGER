@@ -4,6 +4,8 @@ from Services.recycle_bin_service import RecycleBinService
 from Utils.formatters import format_size
 from Utils.delete_handler import DeleteHandler
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMenu
+from PySide6.QtGui import QAction
 
 class RecycleBinDialog(QDialog, Ui_RecycleBinDialog):
     def __init__(self, parent=None):
@@ -18,9 +20,9 @@ class RecycleBinDialog(QDialog, Ui_RecycleBinDialog):
         self.tableWidget.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
         
         
-        self.refreshButton.clicked.connect(self.load_contents)
-        self.restoreButton.clicked.connect(self.restore_selected)
-        self.deleteButton.clicked.connect(self.delete_permanently)
+        
+        
+        
         self.emptyButton.clicked.connect(self.empty_bin)
         
        
@@ -29,6 +31,7 @@ class RecycleBinDialog(QDialog, Ui_RecycleBinDialog):
     def load_contents(self):
         contents = self.service.get_contents()
         self.tableWidget.setRowCount(len(contents))
+        self.verticalHeader().setVisible(False)
         
         for row, item in enumerate(contents):
             self.tableWidget.setItem(row, 0, QTableWidgetItem(item.get('originalName', '')))
@@ -37,15 +40,28 @@ class RecycleBinDialog(QDialog, Ui_RecycleBinDialog):
             self.tableWidget.setItem(row, 3, QTableWidgetItem('Folder' if item.get('isDirectory') else 'File'))
             self.tableWidget.setItem(row, 4, QTableWidgetItem(format_size(item.get('size', 0))))
             
-            
+            # Store recycled path for operations
             self.tableWidget.item(row, 0).setData(Qt.UserRole, item.get('recycledPath'))
-    
     def get_selected_recycled_path(self):
         selected_row = self.tableWidget.currentRow()
         if selected_row >= 0:
             return self.tableWidget.item(selected_row, 0).data(Qt.UserRole)
         return None
     
+    def contextMenuEvent(self, event):
+        item = self.tableWidget.itemAt(event.pos())
+        if item:
+            menu = QMenu(self)
+            restore_action = QAction("Restore", self)
+            delete_action = QAction("Permanently Delete", self)
+            menu.addAction(restore_action)
+            menu.addAction(delete_action)
+            action = menu.exec(event.globalPos())
+            if action == restore_action:
+                self.restore_selected()
+            elif action == delete_action:
+                self.delete_permanently()
+
     def restore_selected(self):
         recycled_path = self.get_selected_recycled_path()
         if recycled_path:

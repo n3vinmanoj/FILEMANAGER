@@ -501,10 +501,41 @@ QMessageBox QLabel {{
     font-weight: 400;
 }}
 """
+ICON_VIEW_STYLE = f"""
+/* Icon View Item Styling */
+QListWidget#icon_view_widget::item {{
+    min-width: 100px;
+    max-width: 120px;
+    min-height: 80px;
+    margin: 10px;
+}}
+
+QListWidget#icon_view_widget::item[iconsize="small"] {{
+    min-width: 80px;
+    max-width: 100px;
+    min-height: 70px;
+    margin: 10px;
+}}
+"""
+
+TOOLBAR_STYLE = f"""
+/* Toolbar View Button Styling */
+QToolBar QToolButton {{
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px;
+}}
+
+QToolBar QToolButton:hover {{
+    background-color: {COLORS['surface_hover']};
+    border: 1px solid {COLORS['border_subtle']};
+}}
+"""
 
 def apply_styles(app):
     """Apply the complete stylesheet to the application"""
-    complete_style = MAIN_STYLE + DIALOG_STYLE + MESSAGE_BOX_STYLE + DRAG_DROP_STYLE + SIDEBAR_STYLE
+    complete_style = MAIN_STYLE + DIALOG_STYLE + MESSAGE_BOX_STYLE + DRAG_DROP_STYLE + SIDEBAR_STYLE + ICON_VIEW_STYLE + TOOLBAR_STYLE
     app.setStyleSheet(complete_style)
 
 def get_icon_color():
