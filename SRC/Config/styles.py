@@ -11,7 +11,7 @@ COLORS = {
     'secondary': '#6b7280',      # Medium gray
     'background': '#1a1a1a',     # Dark background like Linux
     'surface': '#2a2a2a',        # Dark surface
-    'surface_hover': '#3a3a3a',  # Hover state
+    'surface_hover': "#848282",  # Hover state
     'surface_light': '#242424',  # Slightly lighter surface
     'text': '#e5e5e5',           # Light text on dark
     'text_secondary': '#b5b5b5', # Medium gray text
@@ -25,7 +25,7 @@ COLORS = {
     'drag_over':'#6b728020',     # Subtle overlay
     'selection': '#6b728025',    # Subtle selection
     'keyboard_focus': '#6b728015', # Barely visible focus
-    'divider': '#404040',        # Dark divider
+    'divider': '#404040'       # Dark divider
 }
 
 
@@ -146,7 +146,7 @@ QLineEdit::placeholder {{
 QTableWidget {{
     background-color: {COLORS['surface_light']};
     border: 1px solid {COLORS['border']};
-    border-radius: 16px;
+    border-radius: 2px;
     gridline-color: transparent;
     selection-background-color: {COLORS['selection']};
     alternate-background-color: {COLORS['surface']};
@@ -160,6 +160,7 @@ QTableWidget::item {{
     outline: none;
     font-weight: 400;
     border-bottom: 1px solid {COLORS['border_light']};
+    
 }}
 
 QTableWidget::item:focus {{
@@ -172,6 +173,12 @@ QTableWidget::item:focus {{
 
 QTableWidget::item:selected {{
     background-color: {COLORS['selection']};
+    color: {COLORS['text']};
+    outline: none;
+    border-bottom: 1px solid {COLORS['border_light']};
+}}
+
+QTableWidget::item:!selected {{  /* Make non-selected items transparent */
     color: {COLORS['text']};
     outline: none;
     border-bottom: 1px solid {COLORS['border_light']};
@@ -442,7 +449,7 @@ QTableWidget::item:selected {{
 
 /* Keyboard focus indicators - Barely visible */
 QTableWidget::item:focus {{
-    background-color: {COLORS['keyboard_focus']};
+    background-color: transparent;
     border: none;
 }}
 
@@ -453,8 +460,8 @@ QTableWidget::item:selected:active {{
 }}
 
 QTableWidget::item:selected:!active {{
-    background-color: {COLORS['surface_hover']};
-    color: {COLORS['text']};
+    background-color: transparent;
+    color: transparent;
 }}
 """
 

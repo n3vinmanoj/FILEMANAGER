@@ -23,8 +23,6 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
     """Main file manager window with all business logic"""
     def __init__(self):
         try:
-
-            
             print("Initializing FileManagerWindow...")
             super().__init__()
             print("✓ Super initialization complete")
@@ -77,6 +75,24 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
             )
             sys.exit(1)
     
+    def mousePressEvent(self, event):
+    # Only clear if we're not clicking on a file item or sidebar item
+        if not self.file_list.underMouse() and not self.sidebarFrame.underMouse():
+            self.file_list.clearSelection()
+            if hasattr(self, "icon_view_widget"):
+                self.icon_view_widget.clearSelection()
+
+        # Also clear selection in sidebar lists
+        self.placesList.clearSelection()
+        self.devicesList.clearSelection()
+
+        # Force immediate UI update
+        self.file_list.viewport().update()
+        if hasattr(self, "icon_view_widget"):
+            self.icon_view_widget.viewport().update()
+
+        super().mousePressEvent(event)
+        
     def init_ui(self):
         self.verticalLayout_3.removeWidget(self.file_list)
         self.file_list.deleteLater()
@@ -103,6 +119,9 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
 
         self.hidden_toggle = self.findChild(QToolButton, "hidden_toggle")
         self.hidden_toggle.toggled.connect(self.toggle_hidden_files)
+
+        self.placesList.itemClicked.connect(lambda _: self.file_list.clearSelection())
+        self.devicesList.itemClicked.connect(lambda _: self.file_list.clearSelection())
 
         
         self.itemCountLabel.setText("Items: 0")

@@ -3,9 +3,9 @@ from datetime import datetime
 def format_size(bytes_size):
     """Format file size in human readable format"""
     if bytes_size == 0:
-        return "0 Bytes"
+        return "0 B"
     
-    sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+    sizes = ["B", "KB", "MB", "GB", "TB"]
     i = 0
     while bytes_size >= 1024 and i < len(sizes) - 1:
         bytes_size /= 1024
