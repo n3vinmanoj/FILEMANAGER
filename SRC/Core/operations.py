@@ -268,7 +268,7 @@ class FileManagerWindow(QMainWindow, Ui_MainWindow):
             ("🎵 Music", os.path.join(home_path, "Music")),
             ("🖼️ Pictures", os.path.join(home_path, "Pictures")),
             ("🎬 Videos", os.path.join(home_path, "Videos")),
-            ("🗑️ Trash", os.path.join(home_path, ".Trash"))  # Linux trash location
+            ("🗑️ Trash", os.path.join(home_path, "Trash"))  # Linux trash location
         ]
 
     # Clear existing items and add new ones
